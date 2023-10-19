@@ -24,12 +24,28 @@
         BaseButton with color props
       </button>
 
+      <button 
+  class="base-button base-button--primary" 
+  @click="handleAsyncClick" 
+  :disabled="isLoading"
+>
+  <span v-if="isLoading" class="loading-icon"></span>
+  Disabled and animated for 2 seconds if clicked
+</button>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  
+  data() {
+  return {
+    isLoading: false
+  }
+},
+
   methods: {
     hover(event) {
       event.target.style.backgroundColor = "#45a049";
@@ -48,9 +64,21 @@ export default {
     },
     unfocus(event) {
       this.unhover(event);
-    }
-  }
+    },
+
+    handleAsyncClick() {
+    this.isLoading = true;
+    new Promise((resolve) => {
+      setTimeout(() => {
+        this.isLoading = false;
+        resolve();
+      }, 2000); // 2 sec
+    });
+  }  
+  },
 }
+
+
 </script>
 
 <style scoped>
@@ -109,5 +137,20 @@ export default {
 
 .base-button--danger:hover, .base-button--danger:focus {
   background-color: #ef5350;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-icon {
+  border: 4px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top: 4px solid white;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin-right: 5px;
 }
 </style>

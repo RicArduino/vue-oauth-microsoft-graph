@@ -42,7 +42,8 @@ export default {
   
   data() {
   return {
-    isLoading: false
+    isLoading: false,
+    clickCount: 0  
   }
 },
 
@@ -66,15 +67,17 @@ export default {
       this.unhover(event);
     },
 
-    handleAsyncClick() {
+  handleAsyncClick() {
     this.isLoading = true;
+    this.clickCount++;  // Augmentez le compteur de clics à chaque clic
+
     new Promise((resolve) => {
       setTimeout(() => {
         this.isLoading = false;
         resolve();
-      }, 2000); // 2 sec
+      }, 1000 * this.clickCount);  // Multipliez le temps d'attente par le nombre de clics
     });
-  }  
+  }
   },
 }
 

@@ -1,32 +1,53 @@
 <template>
-    <div class="container">
+  <div class="container">
+    
+    <div class="content">
+      Here comes the content of the HomePage.
       
-      <div class="content">
-        Here comes the content of the HomePage.
-        <button class="base-button" @mouseover="hover" @mouseleave="unhover" @focus="focus" @blur="unfocus" :disabled="false">
-        BaseButton with custom margin
+      <!-- Bouton Primary -->
+      <button class="base-button base-button--primary" @mouseover="hover" @mouseleave="unhover" @focus="focus" @blur="unfocus">
+        BaseButton
       </button>
-      <button class="base-button base-button--disabled" @mouseover="hover" @mouseleave="unhover" @focus="focus" @blur="unfocus" :disabled="true">
+
+      <!-- Bouton Disabled -->
+      <button class="base-button base-button--disabled" @mouseover="hover" @mouseleave="unhover" @focus="focus" @blur="unfocus" disabled>
         BaseButton disabled
       </button>
-      </div>
+
+      <!-- Bouton Danger -->
+      <button class="base-button base-button--danger" @mouseover="hover" @mouseleave="unhover" @focus="focus" @blur="unfocus">
+        BaseButton with color props
+      </button>
+
+      <!-- Bouton Warn -->
+      <button class="base-button base-button--warn" @mouseover="hover" @mouseleave="unhover" @focus="focus" @blur="unfocus">
+        BaseButton with color props
+      </button>
+
     </div>
-  </template>
-  
-  <script>
+  </div>
+</template>
+
+<script>
 export default {
   methods: {
-    hover() {
-      this.$el.querySelector('.base-button').style.backgroundColor = "#45a049";
+    hover(event) {
+      event.target.style.backgroundColor = "#45a049";
     },
-    unhover() {
-      this.$el.querySelector('.base-button').style.backgroundColor = "#4CAF50";
+    unhover(event) {
+      if (event.target.classList.contains("base-button--primary")) {
+        event.target.style.backgroundColor = "#4CAF50";
+      } else if (event.target.classList.contains("base-button--danger")) {
+        event.target.style.backgroundColor = "#e53935";
+      } else if (event.target.classList.contains("base-button--warn")) {
+        event.target.style.backgroundColor = "#ff5722";
+      }
     },
-    focus() {
-      this.$el.querySelector('.base-button').style.backgroundColor = "#45a049";
+    focus(event) {
+      event.target.style.backgroundColor = "#45a049";
     },
-    unfocus() {
-      this.$el.querySelector('.base-button').style.backgroundColor = "#4CAF50";
+    unfocus(event) {
+      this.unhover(event);
     }
   }
 }
@@ -64,5 +85,29 @@ export default {
 .base-button--disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.base-button--primary {
+  background-color: #42b983;
+}
+
+.base-button--primary:hover, .base-button--primary:focus {
+  background-color: #45a049;
+}
+
+.base-button--warn {
+  background-color: #ff5722;
+}
+
+.base-button--warn:hover, .base-button--warn:focus {
+  background-color: #ff7043;
+}
+
+.base-button--danger {
+  background-color: #e53935;
+}
+
+.base-button--danger:hover, .base-button--danger:focus {
+  background-color: #ef5350;
 }
 </style>
